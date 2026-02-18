@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhosWillWeb — Design Directions</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fafafa; color: #171717; }
+    .nav-tabs { display: flex; gap: 0; background: #fff; border-bottom: 1px solid #e5e5e5; padding: 0 24px; position: sticky; top: 0; z-index: 10; }
+    .nav-tabs button { padding: 16px 24px; border: none; background: none; cursor: pointer; font-size: 14px; font-weight: 500; color: #525252; }
+    .nav-tabs button:hover { color: #171717; }
+    .nav-tabs button.active { color: #2563eb; border-bottom: 2px solid #2563eb; margin-bottom: -1px; }
+    .direction { display: none; padding: 32px; max-width: 1120px; margin: 0 auto; }
+    .direction.active { display: block; }
+    .direction h2 { font-size: 24px; margin: 0 0 8px; color: #171717; }
+    .direction .subtitle { font-size: 14px; color: #525252; margin-bottom: 32px; }
+    /* Direction A: Hero + Skills strip + Project grid */
+    .dir-a .toolbar { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; margin-bottom: 48px; }
+    .dir-a .toolbar .logo { font-weight: 700; font-size: 18px; }
+    .dir-a .toolbar nav { display: flex; gap: 32px; }
+    .dir-a .toolbar a { color: #525252; text-decoration: none; font-size: 14px; }
+    .dir-a .hero { text-align: center; padding: 80px 0 64px; }
+    .dir-a .hero h1 { font-size: 48px; margin: 0 0 16px; letter-spacing: -0.02em; }
+    .dir-a .hero p { font-size: 18px; color: #525252; max-width: 480px; margin: 0 auto 48px; line-height: 1.5; }
+    .dir-a .skills { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 64px; }
+    .dir-a .skill-tag { background: #f5f5f5; padding: 8px 16px; border-radius: 9999px; font-size: 14px; font-weight: 500; }
+    .dir-a .section-title { font-size: 28px; margin-bottom: 32px; font-weight: 600; }
+    .dir-a .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .dir-a .card { background: #fff; border-radius: 12px; padding: 24px; border: 1px solid #e5e5e5; }
+    .dir-a .card h3 { font-size: 18px; margin: 0 0 8px; }
+    .dir-a .card p { font-size: 14px; color: #525252; margin: 0; line-height: 1.5; }
+    /* Direction B: Homepage with highlighted projects on same page */
+    .dir-b .toolbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid #e5e5e5; margin-bottom: 0; }
+    .dir-b .toolbar .logo { font-weight: 700; font-size: 20px; }
+    .dir-b .toolbar nav { display: flex; gap: 28px; }
+    .dir-b .toolbar a { color: #171717; text-decoration: none; font-size: 15px; }
+    .dir-b .hero { padding: 64px 0 48px; display: flex; align-items: center; justify-content: space-between; gap: 48px; }
+    .dir-b .hero-left h1 { font-size: 40px; margin: 0 0 12px; letter-spacing: -0.02em; }
+    .dir-b .hero-left p { color: #525252; font-size: 16px; margin: 0 0 24px; line-height: 1.6; }
+    .dir-b .skills-inline { display: flex; flex-wrap: wrap; gap: 8px; }
+    .dir-b .skill-tag { background: #eff6ff; color: #1d4ed8; padding: 6px 14px; border-radius: 6px; font-size: 13px; font-weight: 500; }
+    .dir-b .section-title { font-size: 22px; margin: 48px 0 24px; font-weight: 600; }
+    .dir-b .project-list { display: flex; flex-direction: column; gap: 20px; }
+    .dir-b .card { background: #fff; border-radius: 12px; padding: 28px; border: 1px solid #e5e5e5; display: flex; gap: 24px; align-items: flex-start; }
+    .dir-b .card .num { font-size: 32px; font-weight: 700; color: #e5e5e5; line-height: 1; }
+    .dir-b .card h3 { font-size: 18px; margin: 0 0 6px; }
+    .dir-b .card p { font-size: 14px; color: #525252; margin: 0; line-height: 1.5; }
+    /* Direction C: Single-column scroll, very minimal */
+    .dir-c .toolbar { display: flex; justify-content: center; gap: 40px; padding: 24px 0; margin-bottom: 64px; }
+    .dir-c .toolbar a { color: #171717; text-decoration: none; font-size: 14px; font-weight: 500; }
+    .dir-c .hero { padding: 40px 0 56px; border-bottom: 1px solid #e5e5e5; }
+    .dir-c .hero h1 { font-size: 36px; margin: 0 0 8px; letter-spacing: -0.02em; }
+    .dir-c .hero .tagline { font-size: 16px; color: #525252; margin-bottom: 24px; }
+    .dir-c .skills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .dir-c .skill-tag { font-size: 13px; color: #525252; }
+    .dir-c .section-title { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #737373; margin: 48px 0 20px; }
+    .dir-c .project-list { display: flex; flex-direction: column; gap: 32px; }
+    .dir-c .card { padding: 0 0 32px; border-bottom: 1px solid #f0f0f0; }
+    .dir-c .card h3 { font-size: 20px; margin: 0 0 6px; }
+    .dir-c .card p { font-size: 15px; color: #525252; line-height: 1.5; margin: 0; }
+    .criteria { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 24px; margin-top: 48px; }
+    .criteria h3 { font-size: 16px; margin: 0 0 12px; }
+    .criteria ul { margin: 0; padding-left: 20px; color: #525252; font-size: 14px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="nav-tabs">
+    <button class="active" onclick="show('dir-a')">Direction A — Centered hero + grid</button>
+    <button onclick="show('dir-b')">Direction B — Highlighted projects on homepage</button>
+    <button onclick="show('dir-c')">Direction C — Single-column minimal</button>
+  </div>
+
+  <div id="dir-a" class="direction active">
+    <h2>Direction A: Centered hero + skills strip + project grid</h2>
+    <p class="subtitle">Classic portfolio: big hero, skills as tags, projects in a grid. Best for “scroll through projects” on a dedicated Projects page.</p>
+    <div class="dir-a">
+      <header class="toolbar">
+        <span class="logo">Will</span>
+        <nav><a href="#">Home</a><a href="#">Projects</a><a href="#">Contact</a></nav>
+      </header>
+      <section class="hero">
+        <h1>Mobile App Developer</h1>
+        <p>I build iOS, Android, and cross-platform apps with Swift, Kotlin, and React Native. Fast delivery, modern stack.</p>
+        <div class="skills">
+          <span class="skill-tag">Swift</span><span class="skill-tag">Kotlin</span><span class="skill-tag">React Native</span><span class="skill-tag">AI-assisted coding</span>
+        </div>
+      </section>
+      <h2 class="section-title">Featured projects</h2>
+      <div class="project-grid">
+        <div class="card"><h3>Project One</h3><p>App description and technologies used.</p></div>
+        <div class="card"><h3>Project Two</h3><p>App description and technologies used.</p></div>
+        <div class="card"><h3>Project Three</h3><p>App description and technologies used.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="dir-b" class="direction">
+    <h2>Direction B: Homepage with highlighted projects</h2>
+    <p class="subtitle">Skills + highlighted projects on the same page. Matches “show highlighted projects on homepage” mental model.</p>
+    <div class="dir-b">
+      <header class="toolbar">
+        <span class="logo">Will</span>
+        <nav><a href="#">Home</a><a href="#">Projects</a><a href="#">Contact</a></nav>
+      </header>
+      <section class="hero">
+        <div class="hero-left">
+          <h1>Will</h1>
+          <p>Mobile app developer — Swift, Kotlin, React Native. I ship products quickly with a modern stack.</p>
+          <div class="skills-inline">
+            <span class="skill-tag">Swift</span><span class="skill-tag">Kotlin</span><span class="skill-tag">React Native</span><span class="skill-tag">AI-assisted coding</span>
+          </div>
+        </div>
+      </section>
+      <h2 class="section-title">Highlighted projects</h2>
+      <div class="project-list">
+        <div class="card"><span class="num">01</span><div><h3>Project One</h3><p>Short description and tech stack.</p></div></div>
+        <div class="card"><span class="num">02</span><div><h3>Project Two</h3><p>Short description and tech stack.</p></div></div>
+        <div class="card"><span class="num">03</span><div><h3>Project Three</h3><p>Short description and tech stack.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="dir-c" class="direction">
+    <h2>Direction C: Single-column minimal</h2>
+    <p class="subtitle">Very minimal: centered nav, one column, lots of whitespace. Scroll-through-projects as one long page.</p>
+    <div class="dir-c">
+      <nav class="toolbar">
+        <a href="#">Home</a><a href="#">Projects</a><a href="#">Contact</a>
+      </nav>
+      <section class="hero">
+        <h1>Will</h1>
+        <p class="tagline">Mobile app developer</p>
+        <div class="skills">
+          <span class="skill-tag">Swift · Kotlin · React Native · AI-assisted coding</span>
+        </div>
+      </section>
+      <h2 class="section-title">Projects</h2>
+      <div class="project-list">
+        <div class="card"><h3>Project One</h3><p>Description and technologies.</p></div>
+        <div class="card"><h3>Project Two</h3><p>Description and technologies.</p></div>
+        <div class="card"><h3>Project Three</h3><p>Description and technologies.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="direction active" id="criteria-wrap" style="max-width: 1120px; margin: 0 auto; padding: 32px;">
+    <div class="criteria">
+      <h3>Evaluation criteria</h3>
+      <ul>
+        <li><strong>Layout</strong> — Which hierarchy supports “skills at a glance” and “scroll through projects”?</li>
+        <li><strong>Interaction</strong> — Which fits your core experience (scroll, click for details)?</li>
+        <li><strong>Visual weight</strong> — Spacious (Apple-like) vs denser?</li>
+        <li><strong>Navigation</strong> — Top toolbar with Home / Projects / Contact?</li>
+        <li><strong>Homepage</strong> — Highlighted projects on homepage (B) vs separate Projects page (A/C)?</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function show(id) {
+      document.querySelectorAll('.direction').forEach(el => { el.classList.remove('active'); });
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.nav-tabs button').forEach((btn, i) => {
+        btn.classList.toggle('active', (id === 'dir-a' && i === 0) || (id === 'dir-b' && i === 1) || (id === 'dir-c' && i === 2));
+      });
+    }
+  </script>
+</body>
+</html>
