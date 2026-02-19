@@ -59,18 +59,4 @@ export const projects: Project[] = [
     ],
     externalUrl: 'https://www.eee.hku.hk/ce-students-teams-won-in-the-mobile-application-innovation-contest-china-collegiate-computing-contest/',
   },
-  {
-    id: '3',
-    title: 'Project Three',
-    description: 'Android app built with Kotlin. Demonstrates cross-platform thinking and performance focus.',
-    technologies: ['Kotlin', 'Android'],
-    githubUrl: 'https://github.com',
-  },
-  {
-    id: '4',
-    title: 'Project Four',
-    description: 'Full-stack feature with AI-assisted development. Highlights ability to ship quickly with modern tools.',
-    technologies: ['React Native', 'AI-assisted coding'],
-    youtubeUrl: 'https://youtube.com',
-  },
 ]

@@ -2,14 +2,16 @@
 
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import type { Project } from '@/data/projects'
+import type { Messages } from '@/lib/i18n'
 
 type Props = {
   project: Project | null
   open: boolean
   onClose: () => void
+  common: Messages['common']
 }
 
-export default function ProjectDetailModal({ project, open, onClose }: Props) {
+export default function ProjectDetailModal({ project, open, onClose, common }: Props) {
   if (!project) return null
 
   const hasImages = project.images && project.images.length > 0
@@ -79,7 +81,7 @@ export default function ProjectDetailModal({ project, open, onClose }: Props) {
             {hasFeatures && (
               <section className="mb-6" aria-labelledby={`project-${project.id}-features`}>
                 <h3 id={`project-${project.id}-features`} className="text-sm font-semibold text-neutral-900 uppercase tracking-wider mb-3">
-                  Features
+                  {common.featuresSection}
                 </h3>
                 <ul className="space-y-2">
                   {project.features!.map((feature, i) => (
@@ -96,7 +98,7 @@ export default function ProjectDetailModal({ project, open, onClose }: Props) {
             {hasAwards && (
               <section className="mb-6" aria-labelledby={`project-${project.id}-awards`}>
                 <h3 id={`project-${project.id}-awards`} className="text-sm font-semibold text-neutral-900 uppercase tracking-wider mb-3">
-                  Awards & recognition
+                  {common.awardsSection}
                 </h3>
                 <ul className="space-y-2">
                   {project.awards!.map((award, i) => (
@@ -119,7 +121,7 @@ export default function ProjectDetailModal({ project, open, onClose }: Props) {
                     rel="noopener noreferrer"
                     className="text-sm font-medium text-primary hover:underline min-h-[44px] min-w-[44px] inline-flex items-center transition-colors duration-200"
                   >
-                    GitHub
+                    {common.github}
                   </a>
                 )}
                 {project.youtubeUrl && (
@@ -129,7 +131,7 @@ export default function ProjectDetailModal({ project, open, onClose }: Props) {
                     rel="noopener noreferrer"
                     className="text-sm font-medium text-primary hover:underline min-h-[44px] min-w-[44px] inline-flex items-center transition-colors duration-200"
                   >
-                    Video
+                    {common.video}
                   </a>
                 )}
                 {project.externalUrl && (
@@ -139,7 +141,7 @@ export default function ProjectDetailModal({ project, open, onClose }: Props) {
                     rel="noopener noreferrer"
                     className="text-sm font-medium text-primary hover:underline min-h-[44px] min-w-[44px] inline-flex items-center transition-colors duration-200"
                   >
-                    Visit project
+                    {common.visitProject}
                   </a>
                 )}
               </div>
@@ -150,7 +152,7 @@ export default function ProjectDetailModal({ project, open, onClose }: Props) {
               onClick={onClose}
               className="min-h-[44px] px-4 py-2 text-sm font-medium text-neutral-700 bg-neutral-100 hover:bg-neutral-200 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200"
             >
-              Close
+              {common.close}
             </button>
           </div>
         </DialogPanel>

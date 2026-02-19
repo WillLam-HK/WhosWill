@@ -4,7 +4,11 @@ import { useEffect, useState } from 'react'
 
 const skills = ['Swift', 'Kotlin', 'React Native', 'AI-assisted coding']
 
-export default function Hero() {
+type Props = {
+  tagline: string
+}
+
+export default function Hero({ tagline }: Props) {
   const [mounted, setMounted] = useState(false)
   const [reduceMotion, setReduceMotion] = useState(false)
 
@@ -38,7 +42,7 @@ export default function Hero() {
           data-no-motion={noMotion}
         >
           <span className="bg-gradient-to-r from-neutral-900 via-neutral-800 to-neutral-900 bg-clip-text text-transparent">
-            Will
+            Will Lam
           </span>
         </h1>
         <p
@@ -46,7 +50,7 @@ export default function Hero() {
           data-mounted={mounted}
           data-no-motion={noMotion}
         >
-          Mobile app developer — I build iOS, Android, and cross-platform apps. I ship products quickly with a modern stack.
+          {tagline}
         </p>
         <div className="flex flex-wrap gap-2" aria-label="Skills">
           {skills.map((skill, i) => (

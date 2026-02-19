@@ -1,6 +1,7 @@
 'use client'
 
 import type { Project } from '@/data/projects'
+import type { Messages } from '@/lib/i18n'
 import ProjectCard from './ProjectCard'
 import ScrollReveal from './ScrollReveal'
 
@@ -9,9 +10,10 @@ const STAGGER_MS = 80
 type Props = {
   projects: Project[]
   onProjectClick?: (project: Project) => void
+  common: Messages['common']
 }
 
-export default function ProjectList({ projects, onProjectClick }: Props) {
+export default function ProjectList({ projects, onProjectClick, common }: Props) {
   if (projects.length === 0) {
     return (
       <p className="text-neutral-600 py-8">Projects coming soon.</p>
@@ -29,6 +31,7 @@ export default function ProjectList({ projects, onProjectClick }: Props) {
           <ProjectCard
             project={project}
             onViewDetails={onProjectClick}
+            common={common}
           />
         </ScrollReveal>
       ))}

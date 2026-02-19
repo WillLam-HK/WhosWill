@@ -1,8 +1,22 @@
 # Deploy WhosWillWeb online
 
+## Free options
+
+| Method | Cost | Auto-deploy from GitHub? |
+|--------|------|---------------------------|
+| **Vercel** | Free tier (enough for this portfolio) | Yes — every push to `main` deploys automatically |
+| **Netlify** | Free tier | Yes — same as above |
+| **Self-host (VPS)** | You pay for the server | No — you run `git pull` and rebuild yourself |
+
+**Recommendation:** Use **Vercel**. It’s free for personal projects, and once your GitHub repo is connected, **the live site updates automatically whenever you push to GitHub** (e.g. `git push origin main`). No need to redeploy by hand.
+
+**This project’s live site:** [https://whos-will.vercel.app](https://whos-will.vercel.app)
+
+---
+
 ## Option 1: Vercel (recommended)
 
-Vercel runs Next.js very well and has a generous free tier.
+Vercel runs Next.js very well and has a generous free tier. Connect your GitHub repo once; after that, every push to the branch you chose (e.g. `main`) triggers a new build and the website updates automatically.
 
 ### 1. Push your code to GitHub
 
@@ -22,12 +36,13 @@ git push origin main
 4. Leave the defaults (Framework: Next.js, Build Command: `next build`, Output: default).
 5. Before deploying, add an **Environment Variable**:
    - **Name:** `NEXT_PUBLIC_SITE_URL`
-   - **Value:** your live URL, e.g. `https://whoswill.vercel.app` (you can change this after you add a custom domain).
+   - **Value:** your live URL, e.g. `https://whos-will.vercel.app` (you can change this after you add a custom domain).
 6. Click **Deploy**.
 
 ### 3. After deploy
 
 - Vercel gives you a URL like `https://whoswill-xxx.vercel.app`.
+- **Updates:** From now on, whenever you `git push` to `main` (or the branch you connected), Vercel will build and publish the new version automatically. The site stays in sync with GitHub.
 - To use your own domain (e.g. `whoswill.dev`): Project → **Settings** → **Domains** → add the domain and follow the DNS steps. Then set `NEXT_PUBLIC_SITE_URL` to that URL (e.g. `https://whoswill.dev`) in **Settings** → **Environment Variables** and redeploy.
 
 ### 4. Optional: contact form email
@@ -64,7 +79,7 @@ The contact form currently posts to `/api/contact` and does not send email. To s
 
 | Variable | Purpose |
 |----------|--------|
-| `NEXT_PUBLIC_SITE_URL` | Full public URL of the site (e.g. `https://whoswill.dev`). Used for sitemap, robots.txt, and JSON-LD. Set this in your hosting dashboard. |
+| `NEXT_PUBLIC_SITE_URL` | Full public URL of the site (e.g. `https://whos-will.vercel.app`). Used for sitemap, robots.txt, and JSON-LD. Optional — defaults to the Vercel URL if unset. |
 
 For local development you can create a `.env.local` (never commit it):
 

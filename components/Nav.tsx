@@ -2,26 +2,40 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import type { Messages } from '@/lib/i18n'
+import type { Locale } from '@/lib/i18n'
 
-const links = [
-  { href: '/', label: 'Home' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/contact', label: 'Contact' },
-]
+type Props = {
+  locale: Locale
+  t: Messages
+}
 
-export default function Nav() {
+const linkKeys = ['home', 'skills', 'projects', 'contact'] as const
+const pathByKey: Record<(typeof linkKeys)[number], string> = {
+  home: '',
+  skills: '/skills',
+  projects: '/projects',
+  contact: '/contact',
+}
+
+export default function Nav({ locale, t }: Props) {
   const pathname = usePathname()
 
   return (
     <nav
-      className="sticky top-0 z-10 flex justify-center gap-10 py-6 bg-white/80 backdrop-blur-md border-b border-neutral-200/80 shadow-sm shadow-neutral-200/50"
+      className="flex justify-center gap-10 py-2"
       aria-label="Main navigation"
     >
-      {links.map(({ href, label }) => {
-        const isActive = pathname === href || (href !== '/' && pathname.startsWith(href))
+      {linkKeys.map((key) => {
+        const path = pathByKey[key]
+        const href = `/${locale}${path}`.replace(/\/$/, '') || `/${locale}`
+        const label = t.nav[key]
+        const isActive =
+          pathname === href ||
+          (path !== '' && pathname.startsWith(`/${locale}${path}`))
         return (
           <Link
-            key={href}
+            key={key}
             href={href}
             aria-current={isActive ? 'page' : undefined}
             className={`min-h-[44px] min-w-[44px] flex items-center justify-center text-sm font-medium rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:scale-x-0 after:transition-transform after:duration-200 hover:after:scale-x-100 ${

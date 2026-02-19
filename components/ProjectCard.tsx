@@ -1,13 +1,15 @@
 'use client'
 
 import type { Project } from '@/data/projects'
+import type { Messages } from '@/lib/i18n'
 
 type Props = {
   project: Project
   onViewDetails?: (project: Project) => void
+  common: Messages['common']
 }
 
-export default function ProjectCard({ project, onViewDetails }: Props) {
+export default function ProjectCard({ project, onViewDetails, common }: Props) {
   const thumbnail = project.images?.[0]
   const awardTeaser = project.awards?.[0]
   const featureTeaser = project.features?.[0]
@@ -71,7 +73,7 @@ export default function ProjectCard({ project, onViewDetails }: Props) {
               onClick={() => onViewDetails(project)}
               className="inline-flex items-center gap-1.5 rounded-lg bg-primary text-white px-4 py-2 text-sm font-medium shadow-button hover:bg-primary-dark hover:shadow-buttonHover focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-all duration-200 active:scale-[0.98]"
             >
-              View details
+              {common.viewDetails}
             </button>
           )}
           {project.githubUrl && (
@@ -81,7 +83,7 @@ export default function ProjectCard({ project, onViewDetails }: Props) {
               rel="noopener noreferrer"
               className="text-sm font-medium text-primary hover:text-primary-dark min-h-[44px] min-w-[44px] inline-flex items-center transition-colors duration-200"
             >
-              GitHub
+              {common.github}
             </a>
           )}
           {project.youtubeUrl && (
@@ -91,7 +93,7 @@ export default function ProjectCard({ project, onViewDetails }: Props) {
               rel="noopener noreferrer"
               className="text-sm font-medium text-primary hover:text-primary-dark min-h-[44px] min-w-[44px] inline-flex items-center transition-colors duration-200"
             >
-              Video
+              {common.video}
             </a>
           )}
           {project.externalUrl && (
@@ -101,7 +103,7 @@ export default function ProjectCard({ project, onViewDetails }: Props) {
               rel="noopener noreferrer"
               className="text-sm font-medium text-primary hover:text-primary-dark min-h-[44px] min-w-[44px] inline-flex items-center transition-colors duration-200"
             >
-              Link
+              {common.link}
             </a>
           )}
         </div>
