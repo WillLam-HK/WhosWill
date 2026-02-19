@@ -1,5 +1,6 @@
 import { projects } from '@/data/projects'
-import ProjectList from '@/components/ProjectList'
+import ProjectListWithModal from '@/components/ProjectListWithModal'
+import ScrollReveal from '@/components/ScrollReveal'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -9,9 +10,12 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <div className="py-10">
-      <h1 className="text-2xl font-bold text-neutral-900 mb-8">Projects</h1>
-      <ProjectList projects={projects} />
-    </div>
+    <ScrollReveal as="div" className="py-10 md:py-14">
+      <div className="mb-10 md:mb-12">
+        <span className="text-sm font-medium text-primary uppercase tracking-wider">Portfolio</span>
+        <h1 className="text-3xl md:text-4xl font-bold text-neutral-900 tracking-tight mt-1">Projects</h1>
+      </div>
+      <ProjectListWithModal projects={projects} />
+    </ScrollReveal>
   )
 }
